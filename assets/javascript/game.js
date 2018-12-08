@@ -5,112 +5,57 @@ var zooAnimals= ["panda", "monkey", "gorilla", "hippo", "rhino",
 "tiger", "kangaroo", "frog", "lemar", "sloth", "boar", "camel", 
 "eagle", "headgehog", "meercat", "bison", "seal", "owl", "antalope"]
 
-const maxTries = 10;
+// Computer guessing what animal user has to write
+// Displaying the number of letters with _
+// Display #guess, letters used, #wins
+// Get what Keys the User puts
+// Update display if the key is correct by replacing the _
+// Update display on how much guesses left
+// Update display on what keys have been used
+// Make a check win and check lose
+// Update display if player won
+// Update display of player loses
+// Make a "Press Any Key To Play Again"
 
-var guessedLetters = [];
+var computerGuess;
 
-var currentWord;
+var numberOfGuess = 10;
 
-var guessingWord = [];
+var numberOfWins = 0;
 
-var remainingGuesses = 0;
+var lettersGuessed;
 
-var finished = false;
-
-var wins = 0;
-
-var guessingWordText = "";
-
-function resetGame() {
-    remainingGuesses = maxTries;
-}
-
-currentWord = Math.floor(Math.random() * (zooAnimals.length));
-
-guessedLetters = [];
-guessingWord = [];
-
-console.log(currentWord)
-
-var wins = document.getElementById("totalWins");
+var userGuess;
 
 
-for (var i = 0; i< guessingWord.length; i++) {
-    guessingWordText += guessingWord[i];
-
-}
 
 
-var guessingWordText = document.getElementById("currentWord");
-var remainingGuesses = document.getElementById("remainingGuesses");
-var guessedLetters = document.getElementById("guessedLetters");
+window.onload = function() {
 
+    //Gives computer a random item from zooAnimals Array
+    computerGuess = Math.floor(Math.random() * zooAnimals.length);
 
-function evaluateGuess(letter) {
-    for (var i = 0; i < selectableWords[currentWord].length; i++) {
-        if(selectableWords[currentWord][i] == letter) {
-            guessedLetters.push(i);
-        
-    } 
     
-        else {
 
-        for (var i = 0; i < position.length; i++){
-            guessingWord[position[i]] = letter;
-        }
+    console.log(zooAnimals[computerGuess]);
 
-     }
-}
+    var currentWord = document.getElementById("currentWord");
 
-};
+    var numberOfGuess = document.getElementById("remainingGuess");
 
-
-function checkWin() {
-    if(guessingWord.indexOf("_") === -1) {
-      document.getElementById("currentWord").innerHTML = "You Win!";
-      document.getElementById("remainingGuesses").innerHTML = "Press Any Key To Play Again";
-        wins++;
-        hasFinished = true;
-    }
-
-};
-
-
-function checkLoss()
-{
-    if(remainingGuesses <=0) {
-       document.getElementById("currentWord").innerHTML = "You Lose!";
-        document.getElementById("remainingGuesses").innerHTML = "Press Any Key To Play Again"
-        hasFinished = true;
-    }
-
-}
-
-
-function makeGuess(letter) {
     
-    if (remainingGuesses > 0) {
-        if (guessedLetters.indexOf(letter) === -1) {
-            guessedLetters.push(letter);
-            evaluateGuess(letter);
-        }
+    //Displays underscore equal to number of letters in word being guessed
+    for (i = 0; i < zooAnimals[computerGuess].length; i++) {
+        currentWord.innerHTML += " _ ";
+        var letters = zooAnimals[computerGuess].charAt(i)
+    console.log(letters);
     }
+    //Displays letter replacing _ if guessed correctly
+        letters.onkeydown = function() {
+            letters = zooAnimals[computerGuess]
+        }
+     
+
 };
 
 
-
-document.onkeydown = function(event) {
-    hasFinished = false;
-    if(hasFinished) {
-        resetGame();
-        
-    } else {
-
-        if(event.keyCode >= 65 && event.keyCode <= 90) {
-            makeGuess(event.key.toUpperCase());
-            checkWin();
-            checkLoss();
-        }
-    }
-
-};
